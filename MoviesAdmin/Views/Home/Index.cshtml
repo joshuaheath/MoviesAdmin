@@ -4,5 +4,59 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p> 
+    <h1>Hello This is a git change</h1>
+</div>
+
+@{
+    string message = "Hello Razor!";
+    bool test = false;
+    string userSignedIn = "Log in?";
+
+    List<string> userList = new List<string>{"John B", "Ella S", "Sam P"};
+    List<Friend> friendList = new List<Friend>()
+    {
+        new Friend { Id = 1, Name = "Joe", Email="joe@email.com"},
+        new Friend { Id = 2, Name = "Anna", Email="Anna@email.com"},
+        new Friend { Id = 3, Name = "Ethan", Email="Ethan@email.com"}
+    };
+
+    
+
+
+    if (test)
+    {
+        userSignedIn = "You are signed in!";
+    }
+}
+
+<div>
+    <p>Users</p>
+    <ul>
+        @foreach (Friend friend in friendList)
+        {
+            if (friend.Name == "Anna")
+            {
+                <li>
+                    <strong>Name: @friend.Name, ID: @friend.Id, Email: @friend.Email</strong>
+                </li>
+            }
+            else
+            {
+                <li>
+                    Name: @friend.Name, ID: @friend.Id, Email: @friend.Email
+                </li>
+            }
+        }
+    </ul>
+</div>
+
+
+
+<div class="text-center">
+    Account status: @userSignedIn
+</div>
+
+<div>
+    <img src="~/css/images/LightHouse.jpg" alt="picture of a lighthouse in cape breaton" class="picture">
 </div>

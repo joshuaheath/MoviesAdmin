@@ -1,4 +1,4 @@
-# Movies Admin - Rotten Tomatoes;
+# Movies Admin - Rotten Tomatoes
 
 This website will be for staff to manage all movie data as well as critics to manage reviews
 ---

@@ -26,6 +26,7 @@ This website will be for staff to manage all movie data as well as critics to ma
 ## Basic Overall System Architecture
 
 Admin (Read/Write) -> Database (Read Only) -> API(Read Only) -> Public website
+![Alt Text](System_Architecture.png "Simple Diagram of System Architecture")
 
 ---
 ## License

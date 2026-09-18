@@ -10,7 +10,7 @@ This website will be for staff to manage all movie data as well as critics to ma
 - Backend API: ASP.NET Core Web API
 - Authentication: Secure Admin login and registaction
 - Database: SQL Server
-- (More being added)
+- (Currently in development, information is due to change)
 
 ---
 ## Overall Tech Stack
@@ -19,7 +19,7 @@ This website will be for staff to manage all movie data as well as critics to ma
 - Language: NA
 - Frontend: React
 - Database: SQL Server
-- (More being added)
+- (Currently in development, information is due to change)
 
 ---
 

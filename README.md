@@ -1,6 +1,6 @@
 # Movies Admin - Rotten Tomatoes;
 
-This website will be for staff to manage all movie data as well as critics to manage reviews (Done in ASP.NET Core MVC)
+This website will be for staff to manage all movie data as well as critics to manage reviews
 ---
 ## Overall Features
 - Admin Website: ASP.NET Core MVC

@@ -1,6 +1,7 @@
 ﻿namespace MoviesAdmin.Models
 {
-    // This class is in charge of data relating movies
+    // This class is in charge of data relating movies:
+    // ATTRIBUTES:
     // title
     // synopsis
     // genre

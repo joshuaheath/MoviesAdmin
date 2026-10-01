@@ -13,10 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.runtimeMin)
+                @Html.DisplayNameFor(model => model.title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.title)
+                @Html.DisplayNameFor(model => model.runtimeMin)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.synopsis)
@@ -37,10 +37,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(model => item.runtimeMin)
+                @Html.DisplayFor(model => item.title)
             </td>
             <td>
-                @Html.DisplayFor(model => item.title)
+                @Html.DisplayFor(model => item.runtimeMin)
             </td>
             <td>
                 @Html.DisplayFor(model => item.synopsis)

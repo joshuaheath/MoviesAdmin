@@ -4,36 +4,43 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Movies</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New Movie</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.title)
+                @* @Html.DisplayNameFor(model => model.title) *@
+                Title
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.runtimeMin)
+                @* @Html.DisplayNameFor(model => model.runtimeMin) *@
+                Runtime (min)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.synopsis)
+                @* @Html.DisplayNameFor(model => model.synopsis) *@
+                Description
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.genre)
+                @* @Html.DisplayNameFor(model => model.genre) *@
+                Genre
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.rating)
+                @* @Html.DisplayNameFor(model => model.rating) *@
+                Rating
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.releaseDate)
+                @* @Html.DisplayNameFor(model => model.releaseDate) *@
+                Release Date
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
+@* Data that is being displayed*@
 @foreach (var item in Model) {
         <tr>
             <td>

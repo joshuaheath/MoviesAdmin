@@ -53,7 +53,7 @@ namespace MoviesAdmin.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Movie");
+                    b.ToTable("Movie", (string)null);
                 });
 #pragma warning restore 612, 618
         }

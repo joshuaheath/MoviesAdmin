@@ -6,19 +6,29 @@
     <h1 class="display-4">Ripe Apples - Admin</h1>
 </div>
 
-@{
-    bool adminLoggedInBool = true;
-    string adminLoggedInStatus = "Not Signed In";
 
-    if (adminLoggedInBool){
-        adminLoggedInStatus = "Signed In";
-    }
-}
 
 <div class="text-center">
+    @* asp-action is the action that is called *@
+    <form asp-controller="Home" asp-action="CheckPassword" method="post">
+        @* Lable for text box input*@
+        <label for="passwordInput">Admin password:</label>
+        @*  name="password" is the name of the variable inside of the controller*@ 
+        <input type="text" id="passwordInput" name="password" class="text-center" />
+        @* Submit Button *@
+        <button type="submit" class="btn btn-primary mt-2">Submit</button> 
+    </form>
 
-    <h2>You are currently: @adminLoggedInStatus</h2>
+    @{
+        string signedInStatus = "Not Signed In";
+        if (ViewData["AdminStatus"] != null)
+        {
+            signedInStatus = ViewData["AdminStatus"].ToString();
+        }
+    }
 
+    <h2 class="mt-3">You are currently: @signedInStatus</h2>
+    <p>password is: Admin64</p>
 </div>
 
 

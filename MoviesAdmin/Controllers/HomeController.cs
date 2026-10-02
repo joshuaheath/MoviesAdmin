@@ -4,6 +4,7 @@ using MoviesAdmin.Models;
 using System.Diagnostics;
 
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace MoviesAdmin.Controllers
 {
@@ -36,12 +37,38 @@ namespace MoviesAdmin.Controllers
         }
 
 
-        public IActionResult MyFirstActionMethod()
+        // Runs when admin form is submitted
+        [HttpPost]
+        public IActionResult CheckPassword(string password)
         {
-            Console.WriteLine("MyFirstActionMethod is called.");
+            bool adminLoggedIn = false;
 
-            return View();
+            if (password == "Admin64")
+            {
+                adminLoggedIn = true;
+            }
+
+            string status;
+            if (adminLoggedIn)
+            {
+                status = "Signed In";
+            }
+            else
+            {
+                status = "Not Signed In";
+            }
+
+            ViewData["AdminStatus"] = status;
+            return View("Index");
         }
+        
+
+        //public IActionResult MyFirstActionMethod()
+        //{
+        //    Console.WriteLine("MyFirstActionMethod is called.");
+
+        //    return View();
+        //}
 
 
 

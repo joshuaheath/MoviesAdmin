@@ -13,9 +13,17 @@ public class MoviesController : Controller
     }
 
     // GET: MOVIES
+    //Uses LINQ methods to sort
     public async Task<IActionResult> Index()    
     {
-        return View(await _context.Movie.ToListAsync());
+        //Await means that this can be preformed while other things are happening
+        var movies = await _context.Movie
+            //for each movie, sort by property releaseDate, releaseDate being the key to sort by
+            .OrderByDescending(m => m.releaseDate)
+            //Makes the query to the database run and puts the result into a list using that method above
+            .ToListAsync();
+
+        return View(movies);
     }
 
     // GET: MOVIES/Details/5

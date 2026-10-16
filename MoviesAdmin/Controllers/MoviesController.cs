@@ -57,11 +57,15 @@ public class MoviesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("id,runtimeMin,title,synopsis,genre,rating,releaseDate")] Movie movie, IFormFile ImageUpload)
     {
+
         if (ModelState.IsValid)
         {
-            _context.Add(movie);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            // Upload file to Azure storage
+
+
+            _context.Add(movie); // add new trail to context (db)
+            await _context.SaveChangesAsync(); // Save changes in dp
+            return RedirectToAction(nameof(Index)); // re-direct to
         }
         return View(movie);
     }

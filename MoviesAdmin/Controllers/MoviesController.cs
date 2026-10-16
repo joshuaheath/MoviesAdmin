@@ -55,7 +55,7 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("id,runtimeMin,title,synopsis,genre,rating,releaseDate")] Movie movie)
+    public async Task<IActionResult> Create([Bind("id,runtimeMin,title,synopsis,genre,rating,releaseDate")] Movie movie, IFormFile ImageUpload)
     {
         if (ModelState.IsValid)
         {

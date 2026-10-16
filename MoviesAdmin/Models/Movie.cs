@@ -22,7 +22,7 @@ namespace MoviesAdmin.Models
 
         [Required]
         [Display(Name = "Runtime (Min)")]
-        [Range(1, 240)] //4 Hour max
+        [Range(15, 240)] //4 Hour max
         public int runtimeMin { get; set; }
 
         [Required]

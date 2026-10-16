@@ -10,7 +10,7 @@
 
 <div class="text-center">
     @* asp-action is the action that is called *@
-    <form asp-controller="Home" asp-action="CheckPassword" method="post">
+    <form asp-controller="Home" asp-action="CheckPassword">
         @* Lable for text box input*@
         <label for="passwordInput">Admin password:</label>
         @*  name="password" is the name of the variable inside of the controller*@ 
@@ -28,7 +28,7 @@
     }
 
     <h2 class="mt-3">You are currently: @signedInStatus</h2>
-    <p>password is: Admin64</p>
+    <p>HINT: password is "Admin64"</p>
 </div>
 
 

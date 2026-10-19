@@ -12,6 +12,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th> Trail Image</th>
             <th>
                 @Html.DisplayNameFor(model => model.title)
             </th>
@@ -37,6 +38,9 @@
 @* Data that is being displayed*@
 @foreach (var item in Model) {
         <tr>
+            <td>
+                    <img src="@item.imageUrl" alt="@item.title" class="thumbnail" />
+            </td>
             <td>
                 @Html.DisplayFor(model => item.title)
             </td>

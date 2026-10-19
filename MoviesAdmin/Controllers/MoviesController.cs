@@ -2,14 +2,18 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoviesAdmin.Models;
+using MoviesAdmin.Services;
 
 public class MoviesController : Controller
 {
     private readonly MoviesContext _context;
 
-    public MoviesController(MoviesContext context)
+    private readonly AzureStorageService _azureStorage;
+
+    public MoviesController(MoviesContext context, AzureStorageService azureStorage)
     {
         _context = context;
+        _azureStorage = azureStorage;
     }
 
     // GET: MOVIES
@@ -60,8 +64,17 @@ public class MoviesController : Controller
 
         if (ModelState.IsValid)
         {
-            // Upload file to Azure storage
 
+            string extension = Path.GetExtension(ImageUpload.FileName); // includes the leading dot, e.g. ".jpg"
+            string newFileName = $"{Guid.NewGuid()}{extension}";
+
+            // Upload file to Azure storage
+            string url = await _azureStorage.UploadFileAsync(ImageUpload, newFileName);
+
+
+            movie.imageUrl = url;
+
+            //Save trail to data base
 
             _context.Add(movie); // add new trail to context (db)
             await _context.SaveChangesAsync(); // Save changes in dp

@@ -33,3 +33,8 @@ body {
     width: 250px;
     height: auto;
 }
+
+.thumbnail{
+    width: 150px;
+    height: auto;
+}

@@ -6,7 +6,7 @@ namespace MoviesAdmin.Services
     public class AzureStorageService : IAzureStorageService
     {
         private readonly IConfiguration _configureation;
-        private readonly BlobServiceClient _blobServerClient;
+        private readonly BlobServiceClient _blobServiceClient;
 
         private string containerName;
 
@@ -15,13 +15,11 @@ namespace MoviesAdmin.Services
 
             _configureation = configuration;
 
-            containerName = _configureation["AzureStorage:ContainerName"]?? 
-                throw new InvalidOperationException("Missing config: AzureStorage:ContainerName")
-                
-            string connectionString = _configureation["AzureStorage:ConnectionString"] ?? 
-                throw new InvalidOperationException("Missing configuration: AzureStorage:ConnectionString");
+            containerName = _configureation["AzureStorage:ContainerName"] ?? throw new InvalidOperationException("Missing config: AzureStorage:ContainerName");
 
-            _blobServerClient = new BlobServiceClient(connectionString);
+            string connectionString = _configureation["AzureStorage:ConnectionString"] ?? throw new InvalidOperationException("Missing configuration: AzureStorage:ConnectionString");
+
+            _blobServiceClient = new BlobServiceClient(connectionString);
 
         }
 
@@ -48,4 +46,5 @@ namespace MoviesAdmin.Services
 
             return blobClient.Uri.ToString();
         }
+    }
 }

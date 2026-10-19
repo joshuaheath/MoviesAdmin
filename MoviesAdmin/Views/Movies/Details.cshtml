@@ -4,48 +4,42 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Details - @Html.DisplayNameFor(model => model.title)</h1>
 
+<div class="mb-3">
+	<<img /> src="@Model.imageUrl" alt="@Model.title" class="w-25"/>
+</div>
 <div>
-    <h4>Movie</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.title)
-            Title
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.title)
-        </dd>
-    </dl>
+    <dl>
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.runtimeMin)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.runtimeMin)
         </dd>
-    </dl>
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.synopsis)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.synopsis)
         </dd>
-    </dl>
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.genre)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.genre)
         </dd>
-    </dl>
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.rating)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.rating)
         </dd>
-    </dl>
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.releaseDate)
         </dt>

@@ -40,6 +40,10 @@ namespace MoviesAdmin.Models
         [StringLength(7)]
         public string rating { get; set; } = string.Empty;
         
+
+        [Display(Name = "Image Url")]
+        public string imageUrl {  get; set; } = string.Empty;
+
         [Required]
         [Display(Name = "Release Date")]
         [DisplayFormat(DataFormatString = "{0:MMM d, yyyy}")]

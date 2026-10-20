@@ -59,8 +59,13 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("id,runtimeMin,title,synopsis,genre,rating,releaseDate")] Movie movie, IFormFile ImageUpload)
+    public async Task<IActionResult> Create([Bind("id,runtimeMin,title,synopsis,genre,rating,releaseDate,imageUrl")] Movie movie, IFormFile ImageUpload)
     {
+        if (ImageUpload == null) {
+            ModelState.AddModelError("ImageUpload", "Image file is required");
+            
+        }
+
 
         if (ModelState.IsValid)
         {
@@ -104,7 +109,7 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("id,runtimeMin,title,synopsis,genre,rating,releaseDate")] Movie movie)
+    public async Task<IActionResult> Edit(int? id, [Bind("id,runtimeMin,title,synopsis,genre,rating,releaseDate,imageUrl")] Movie movie)
     {
         if (id != movie.id)
         {
@@ -113,6 +118,14 @@ public class MoviesController : Controller
 
         if (ModelState.IsValid)
         {
+
+            //string extension = Path.GetExtension(ImageUpload.FileName); // includes the leading dot, e.g. ".jpg"
+            //string newFileName = $"{Guid.NewGuid()}{extension}";
+
+            //string url = await _azureStorage.UploadFileAsync(ImageUpload, newFileName);
+
+            //movie.imageUrl = url;
+
             try
             {
                 _context.Update(movie);

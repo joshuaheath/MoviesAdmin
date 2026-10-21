@@ -17,6 +17,10 @@
             <input type="hidden" asp-for="imageUrl" />
 
             <div class="form-group">
+                <img src="@Model.imageUrl" alt="@Model.title" class="detailsView" />
+            </div>
+
+            <div class="form-group">
                 
                 <label asp-for="title" class="control-label"></label>
                 <input asp-for="title" class="form-control" />

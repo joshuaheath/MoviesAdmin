@@ -119,12 +119,6 @@ public class MoviesController : Controller
         if (ModelState.IsValid)
         {
 
-            //string extension = Path.GetExtension(ImageUpload.FileName); // includes the leading dot, e.g. ".jpg"
-            //string newFileName = $"{Guid.NewGuid()}{extension}";
-
-            //string url = await _azureStorage.UploadFileAsync(ImageUpload, newFileName);
-
-            //movie.imageUrl = url;
 
             try
             {

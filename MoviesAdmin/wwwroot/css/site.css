@@ -40,6 +40,10 @@ body {
 }
 
 .detailsView{
-    width: 500px;
+    width: 350px;
     height: auto;
+}
+
+.preserve-newlines {
+    white-space: pre-line;
 }

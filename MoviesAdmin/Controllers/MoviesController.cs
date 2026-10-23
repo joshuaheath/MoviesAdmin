@@ -59,7 +59,7 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("id,runtimeMin,title,synopsis,genre,rating,releaseDate,imageUrl")] Movie movie, IFormFile ImageUpload)
+    public async Task<IActionResult> Create([Bind("id,runtimeMin,title,synopsis,releaseDate,imageUrl")] Movie movie, IFormFile ImageUpload)
     {
         if (ImageUpload == null) {
             ModelState.AddModelError("ImageUpload", "Image file is required");
@@ -109,7 +109,7 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("id,runtimeMin,title,synopsis,genre,rating,releaseDate,imageUrl")] Movie movie)
+    public async Task<IActionResult> Edit(int? id, [Bind("id,runtimeMin,title,synopsis,releaseDate,imageUrl")] Movie movie)
     {
         if (id != movie.id)
         {

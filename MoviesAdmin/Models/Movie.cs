@@ -29,17 +29,6 @@ namespace MoviesAdmin.Models
         [Display(Name = "Description")]
         [StringLength (700)]
         public string synopsis { get; set; } = string.Empty;
-        
-        [Required]
-        [Display(Name = "Genre")]
-        [StringLength (50)]
-        public string genre { get; set; } = string.Empty;
-        
-        [Required]
-        [Display(Name = "Rating")]
-        [StringLength(7)]
-        public string rating { get; set; } = string.Empty;
-        
 
         [Display(Name = "Image Url")]
         public string imageUrl {  get; set; } = string.Empty;

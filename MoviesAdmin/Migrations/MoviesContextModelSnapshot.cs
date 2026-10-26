@@ -21,6 +21,74 @@ namespace MoviesAdmin.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("MoviesAdmin.Models.AudienceRating", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("AudienceRating");
+                });
+
+            modelBuilder.Entity("MoviesAdmin.Models.CriticReview", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("createdBy")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<DateTime>("createdDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("isPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("rating")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("CriticReview");
+                });
+
+            modelBuilder.Entity("MoviesAdmin.Models.Genre", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Genre");
+                });
+
             modelBuilder.Entity("MoviesAdmin.Models.Movie", b =>
                 {
                     b.Property<int>("id")
@@ -28,6 +96,18 @@ namespace MoviesAdmin.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<int>("AudienceRatingKey")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GenreKey")
+                        .HasColumnType("int");
+
+                    b.Property<int>("audienceRatingid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("genreid")
+                        .HasColumnType("int");
 
                     b.Property<string>("imageUrl")
                         .IsRequired()
@@ -51,7 +131,40 @@ namespace MoviesAdmin.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("audienceRatingid");
+
+                    b.HasIndex("genreid");
+
                     b.ToTable("Movie");
+                });
+
+            modelBuilder.Entity("MoviesAdmin.Models.Movie", b =>
+                {
+                    b.HasOne("MoviesAdmin.Models.AudienceRating", "audienceRating")
+                        .WithMany("Movies")
+                        .HasForeignKey("audienceRatingid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MoviesAdmin.Models.Genre", "genre")
+                        .WithMany("Movies")
+                        .HasForeignKey("genreid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("audienceRating");
+
+                    b.Navigation("genre");
+                });
+
+            modelBuilder.Entity("MoviesAdmin.Models.AudienceRating", b =>
+                {
+                    b.Navigation("Movies");
+                });
+
+            modelBuilder.Entity("MoviesAdmin.Models.Genre", b =>
+                {
+                    b.Navigation("Movies");
                 });
 #pragma warning restore 612, 618
         }

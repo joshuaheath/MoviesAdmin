@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 namespace MoviesAdmin.Models
 {
     // This class is in charge of Ratings from audience
@@ -8,6 +9,10 @@ namespace MoviesAdmin.Models
     public class AudienceRating
     {
         public int id { get; set; }
+
+        //Navigation property
+        [ValidateNever]
+        public List<Movie> Movies { get; set; } = new List<Movie>();
 
         [Required]
         [Display(Name = "Title")]

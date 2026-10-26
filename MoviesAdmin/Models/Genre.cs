@@ -9,6 +9,9 @@ namespace MoviesAdmin.Models
     {
         public int id { get; set; }
 
+        // navigation property
+        public List<Movie> Movies { get; set; } = new List<Movie>();
+
         [Required]
         [Display(Name = "Title")]
         [StringLength(50)]

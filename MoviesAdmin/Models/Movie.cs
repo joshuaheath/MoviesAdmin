@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace MoviesAdmin.Models
 {
@@ -13,8 +14,21 @@ namespace MoviesAdmin.Models
     // release data (done as a date time object)
     public class Movie
     {
+        //Primary
         public int id { get; set; }
+        
+        //Forign keys
+        public int GenreKey { get; set; }
+        public int AudienceRatingKey { get; set; }
 
+        //Navigation propertys
+        [ValidateNever]
+        public Genre genre { get; set; } = null!;
+
+        [ValidateNever]
+        public AudienceRating audienceRating { get; set; } = null!;
+
+        // Movie propertys
         [Required]
         [Display(Name = "Title")]
         [StringLength(50)]

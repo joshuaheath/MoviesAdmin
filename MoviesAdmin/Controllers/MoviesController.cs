@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoviesAdmin.Models;
 using MoviesAdmin.Services;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class MoviesController : Controller
 {

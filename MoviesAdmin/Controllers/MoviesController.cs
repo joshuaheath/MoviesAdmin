@@ -4,7 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using MoviesAdmin.Models;
 using MoviesAdmin.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
+using MoviesAdmin;
 
+[Authorize]
 public class MoviesController : Controller
 {
     private readonly MoviesContext _context;
@@ -27,7 +30,7 @@ public class MoviesController : Controller
             .OrderByDescending(m => m.releaseDate)
             //Makes the query to the database run and puts the result into a list using that method above
             .ToListAsync();
-
+        User.GetUserId();
         return View(movies);
     }
 

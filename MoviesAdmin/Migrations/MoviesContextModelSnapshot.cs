@@ -97,12 +97,6 @@ namespace MoviesAdmin.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int>("AudienceRatingKey")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GenreKey")
-                        .HasColumnType("int");
-
                     b.Property<int>("audienceRatingid")
                         .HasColumnType("int");
 

@@ -32,39 +32,23 @@
                 <span asp-validation-for="synopsis" class="text-danger"></span>
             </div>
 
-            @* <div class="mb-3">
-                <label asp-for="genre" class="control-label"></label>
-                <input asp-for="genre" class="form-control" />
-                <span asp-validation-for="genre" class="text-danger"></span>
-            </div> *@
+            <div class="mb-3">
+                <label asp-for="genreid" class="control-label"></label>
+                <select asp-for="genreid" class="form-select" asp-items="ViewBag.genreid"></select>
+            </div>
 
-            @* <div class="mb-3">
-                <label asp-for="rating" class="control-label"></label>
-                <input asp-for="rating" class="form-control" />
-                <span asp-validation-for="rating" class="text-danger"></span>
-            </div> *@
-
-            @* <div class="mb-3">
-                <label asp-for="releaseDate" class="control-label"></label>
-                <input asp-for="releaseDate" class="form-control" />
-                <span asp-validation-for="releaseDate" class="text-danger"></span>
-            </div> *@
+            <div class="mb-3">
+                <label asp-for="audienceRatingid" class="control-label"></label>
+                <select asp-for="audienceRatingid" class="form-select" asp-items="ViewBag.audienceRatingid"></select>
+            </div>
 
             <div class="mb-3">
                 <label for="ImageUpload" class="form-label">Image Upload</label>
                 <input type="file" id="ImageUpload" name="ImageUpload" class="form-control"></input>
             </div>
 
-            <div>
-                <lable class="control-lable" for="GenreKey">Genre</lable>
-                <select class="form-select" data-val="true" data-val-required-"The Genre feild is required." id="GenreKey" name="GenreKey">
 
-                    <option value ="1">Test0</option>
-                    <option value ="2">Test1</option>
-                    <option value ="3">Test2</option>
-                    <option value ="4">Test3</option>
-                </select>
-            </div>
+
             <div class="mb-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

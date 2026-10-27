@@ -18,8 +18,8 @@ namespace MoviesAdmin.Models
         public int id { get; set; }
         
         //Forign keys
-        public int GenreKey { get; set; }
-        public int AudienceRatingKey { get; set; }
+        public int genreid { get; set; }
+        public int audienceRatingid { get; set; }
 
         //Navigation propertys
         [ValidateNever]

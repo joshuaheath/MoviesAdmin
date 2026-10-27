@@ -22,16 +22,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.synopsis)
             </th>
-            @* <th>
+            <th>
                 @Html.DisplayNameFor(model => model.genre)
-            </th> *@
-            @* <th>
-                @Html.DisplayNameFor(model => model.rating)
-            </th> *@
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.audienceRating)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.releaseDate)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -50,12 +49,12 @@
             <td style="white-space: pre-line;">
                 @Html.DisplayFor(model => item.synopsis)
             </td>
-            @* <td>
-                @Html.DisplayFor(model => item.genre)
-            </td> *@
-            @* <td>
-                @Html.DisplayFor(model => item.rating)
-            </td> *@
+            <td>
+                @Html.DisplayFor(model => item.genre.title)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.audienceRating.title)
+            </td>
             <td>
                 @Html.DisplayFor(model => item.releaseDate)
             </td>

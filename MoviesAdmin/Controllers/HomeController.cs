@@ -45,16 +45,6 @@ namespace MoviesAdmin.Controllers
             return View("Index");
         }
         
-
-        //public IActionResult MyFirstActionMethod()
-        //{
-        //    Console.WriteLine("MyFirstActionMethod is called.");
-
-        //    return View();
-        //}
-
-
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

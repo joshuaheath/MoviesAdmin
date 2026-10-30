@@ -41,24 +41,7 @@ namespace MoviesAdmin.Controllers
         [HttpPost]
         public IActionResult CheckPassword(string password)
         {
-            bool adminLoggedIn = false;
 
-            if (password == "Admin64")
-            {
-                adminLoggedIn = true;
-            }
-
-            string status;
-            if (adminLoggedIn)
-            {
-                status = "Signed In";
-            }
-            else
-            {
-                status = "Not Signed In";
-            }
-
-            ViewData["AdminStatus"] = status;
             return View("Index");
         }
         

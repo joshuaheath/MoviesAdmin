@@ -16,16 +16,21 @@ namespace MoviesAdmin.Models
     {
         //Primary
         public int id { get; set; }
-        
+
         //Forign keys
+        [Display(Name = "Genre")]
         public int genreid { get; set; }
+
+        [Display(Name = "Rating")]
         public int audienceRatingid { get; set; }
 
         //Navigation propertys
         [ValidateNever]
+        [Display(Name = "Genre")]
         public Genre genre { get; set; } = null!;
 
         [ValidateNever]
+        [Display(Name = "Rating")]
         public AudienceRating audienceRating { get; set; } = null!;
 
         // Movie propertys

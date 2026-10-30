@@ -43,6 +43,7 @@ public class MoviesController : Controller
 
         var movie = await _context.Movie
             .Include(m => m.genre) //populate the nav property
+            .Include(m => m.audienceRating)
             .FirstOrDefaultAsync(m => m.id == id); // get trail from db where Id = 5
 
         if (movie == null)
@@ -138,12 +139,19 @@ public class MoviesController : Controller
         {
             return NotFound();
         }
-         var exists = _context.AudienceRating.Any(a => a.id == movie.audienceRatingid);
-         if (!exists)
-         {
-             ModelState.AddModelError("audienceRatingid", "Selected Audience Rating does not exist.");
-             // repopulate ViewBag and return View(movie);
-             }
+        var exists = _context.AudienceRating.Any(a => a.id == movie.audienceRatingid);
+        if (!exists)
+        {
+            ModelState.AddModelError("audienceRatingid", "Selected Audience Rating does not exist.");
+            // repopulate ViewBag and return View(movie);
+        }
+
+        // Handle new image file being uploaded
+        //if (ImageUpload != null)
+        //{
+        //    // TO-DO: save the new image and link to this trail record. Also nice to delete old file.
+        //}
+
         if (ModelState.IsValid)
         {
 
@@ -187,6 +195,8 @@ public class MoviesController : Controller
         }
 
         var movie = await _context.Movie
+            .Include(m => m.genre)
+            .Include(m => m.audienceRating)
             .FirstOrDefaultAsync(m => m.id == id);
         if (movie == null)
         {

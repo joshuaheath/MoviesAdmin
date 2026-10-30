@@ -39,22 +39,7 @@
             @Html.DisplayFor(model => model.synopsis)
         </dd>
     </dl>
-    @* <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.genre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.genre)
-        </dd>
-    </dl> *@
-    @* <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.rating)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.rating)
-        </dd>
-    </dl> *@
+    
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.releaseDate) 
@@ -63,6 +48,26 @@
             @Html.DisplayFor(model => model.releaseDate)
         </dd>
     </dl>
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.genre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.genre.title)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.audienceRating)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.audienceRating.title)
+        </dd>
+    </dl>
+
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

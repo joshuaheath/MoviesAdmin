@@ -24,6 +24,8 @@ public class MoviesController : Controller
     //Uses LINQ methods to sort
     public async Task<IActionResult> Index()    
     {
+        string userId = User.GetUserId();
+        Console.WriteLine("Logged in as User" + userId);
 
         List<Movie> movies = await _context.Movie
             .Include(m => m.genre)

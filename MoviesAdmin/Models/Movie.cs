@@ -33,6 +33,9 @@ namespace MoviesAdmin.Models
         [Display(Name = "Rating")]
         public AudienceRating audienceRating { get; set; } = null!;
 
+        [ValidateNever]
+        public List<CriticReview> criticReviews { get; set; } = new List<CriticReview>();
+
         // Movie propertys
         [Required]
         [Display(Name = "Title")]

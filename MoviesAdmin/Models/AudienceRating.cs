@@ -10,6 +10,7 @@ namespace MoviesAdmin.Models
     {
         public int id { get; set; }
 
+
         //Navigation property
         [ValidateNever]
         public List<Movie> Movies { get; set; } = new List<Movie>();

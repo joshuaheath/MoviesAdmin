@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 namespace MoviesAdmin.Models
 {
     // This class is in charge of reviews made by critics
@@ -13,9 +14,17 @@ namespace MoviesAdmin.Models
     {
         public int id { get; set; }
 
+        //FK
+        public int movieId { get; set; }
+
+        // nav prop
+        [ValidateNever]
+        public Movie movie { get; set; } = null!;
+
+
         [Required]
         [Display(Name = "Description")]
-        [StringLength(500)]
+        [StringLength(1000)]
         public string description { get; set; } = string.Empty;
 
         [Required]

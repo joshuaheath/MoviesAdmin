@@ -29,6 +29,15 @@ builder.Services.Configure<OpenIdConnectOptions>(Auth0Constants.AuthenticationSc
     };
 });
 
+builder.Services.Configure<OpenIdConnectOptions>(Auth0Constants.AuthenticationScheme, options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        NameClaimType = "name",
+        RoleClaimType = "https://localhost:7117/roles" // change to your app's domain
+    };
+});
+
 // Auth0 End
 var app = builder.Build();
 

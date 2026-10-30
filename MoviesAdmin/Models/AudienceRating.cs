@@ -15,7 +15,7 @@ namespace MoviesAdmin.Models
         public List<Movie> Movies { get; set; } = new List<Movie>();
 
         [Required]
-        [Display(Name = "Title")]
+        [Display(Name = "Rating")]
         [StringLength(50)]
         public string title { get; set; } = string.Empty;
     }

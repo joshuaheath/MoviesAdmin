@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using MoviesAdmin;
 using MoviesAdmin.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 [Authorize]
 public class CriticReviewsController : Controller
@@ -27,7 +28,7 @@ public class CriticReviewsController : Controller
     {
 
         var movies = await _context.CriticReview
-            .Where(review => review.createdBy == _userId)
+            //.Where(review => review.createdBy == _userId)
             .Include(review => review.movie)
             .ToListAsync();
 
@@ -53,23 +54,56 @@ public class CriticReviewsController : Controller
     }
 
     // GET: CriticReviews/Create
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
+        await PopulateMovieList();
         return View();
     }
 
+
+    //Critics will only need the following feilds to make a review
+    // movieId, description, rating, isPublished
     // POST: CriticReviews/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("id,description,rating,isPublished,createdBy,createdDate")] CriticReview criticReview)
+    public async Task<IActionResult> Create([Bind("id,movieId,description,rating,isPublished")] CriticReview criticReview)
     {
+        // Do not let the critic to submit as someone else
+        criticReview.createdBy = User.GetUserId();
+        criticReview.createdDate = DateTime.Now;
+
+        // Because createdBy is not supplied by the form.
+        ModelState.Remove(nameof(CriticReview.createdBy));
+
+        //Checksif user selected a movie
+        //if (!await _context.Movie.AnyAsync(movie => movie.id == criticReview.id))
+        //{
+        //    ModelState.AddModelError(nameof(CriticReview.movieId), "Please select a valid movie");
+        //}
+
+        //Uploads valid review to database
         if (ModelState.IsValid)
         {
-            _context.Add(criticReview);
+            _context.CriticReview.Add(criticReview);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
         return View(criticReview);
+    }
+
+    //Creates a viewbag for each of the movies in the data base
+
+    private async Task PopulateMovieList(int? selectedMovieId = null)
+    {
+        var movies = await _context.Movie
+            .OrderBy(movie => movie.title)
+            .ToListAsync();
+
+        ViewBag.movieId = new SelectList(
+            movies,
+            "id",
+            "title",
+            selectedMovieId);
     }
 
     // GET: CriticReviews/Edit/5

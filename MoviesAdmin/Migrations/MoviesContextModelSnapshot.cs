@@ -36,7 +36,7 @@ namespace MoviesAdmin.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("AudienceRating");
+                    b.ToTable("AudienceRating", (string)null);
                 });
 
             modelBuilder.Entity("MoviesAdmin.Models.CriticReview", b =>
@@ -57,18 +57,23 @@ namespace MoviesAdmin.Migrations
 
                     b.Property<string>("description")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<bool>("isPublished")
                         .HasColumnType("bit");
+
+                    b.Property<int>("movieId")
+                        .HasColumnType("int");
 
                     b.Property<int>("rating")
                         .HasColumnType("int");
 
                     b.HasKey("id");
 
-                    b.ToTable("CriticReview");
+                    b.HasIndex("movieId");
+
+                    b.ToTable("CriticReview", (string)null);
                 });
 
             modelBuilder.Entity("MoviesAdmin.Models.Genre", b =>
@@ -86,7 +91,7 @@ namespace MoviesAdmin.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Genre");
+                    b.ToTable("Genre", (string)null);
                 });
 
             modelBuilder.Entity("MoviesAdmin.Models.Movie", b =>
@@ -129,7 +134,18 @@ namespace MoviesAdmin.Migrations
 
                     b.HasIndex("genreid");
 
-                    b.ToTable("Movie");
+                    b.ToTable("Movie", (string)null);
+                });
+
+            modelBuilder.Entity("MoviesAdmin.Models.CriticReview", b =>
+                {
+                    b.HasOne("MoviesAdmin.Models.Movie", "movie")
+                        .WithMany("criticReviews")
+                        .HasForeignKey("movieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("movie");
                 });
 
             modelBuilder.Entity("MoviesAdmin.Models.Movie", b =>
@@ -159,6 +175,11 @@ namespace MoviesAdmin.Migrations
             modelBuilder.Entity("MoviesAdmin.Models.Genre", b =>
                 {
                     b.Navigation("Movies");
+                });
+
+            modelBuilder.Entity("MoviesAdmin.Models.Movie", b =>
+                {
+                    b.Navigation("criticReviews");
                 });
 #pragma warning restore 612, 618
         }

@@ -15,6 +15,7 @@ namespace MoviesAdmin.Models
         public int id { get; set; }
 
         //FK
+        [Display(Name ="Movie")]
         public int movieId { get; set; }
 
         // nav prop
@@ -28,12 +29,12 @@ namespace MoviesAdmin.Models
         public string description { get; set; } = string.Empty;
 
         [Required]
-        [Display(Name = "Star Rating")]
+        [Display(Name = "Rating (1 - 5 starts)")]
         [Range(1, 5)]
         public int rating { get; set; }
 
         [Required]
-        [Display(Name = "Is Published?")]
+        [Display(Name = "Published?")]
         public bool isPublished { get; set; } = false;
 
         [Required]
@@ -41,7 +42,6 @@ namespace MoviesAdmin.Models
         [StringLength(40)]
         public string createdBy { get; set; } = string.Empty;
 
-        [Required]
         [Display(Name = "Created Date")]
         [DisplayFormat(DataFormatString = "{0:MMM d, yyyy}")]
         public DateTime createdDate { get; set; } = DateTime.Now;

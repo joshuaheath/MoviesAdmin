@@ -8,8 +8,9 @@
 	<a asp-action="Create">Create New Critic Review</a>
 </p>
 <table class="table">
-	<thead>
+	<thead
 		<tr>
+			<th>Movie</th>
 			<th>@Html.DisplayNameFor(model => model.description)</th>
 			<th>@Html.DisplayNameFor(model => model.rating)</th>
 			<th>@Html.DisplayNameFor(model => model.isPublished)</th>
@@ -21,9 +22,10 @@
 	<tbody>
 @foreach (var item in Model) {
 		<tr>
+			<td>@item.movie.title</td>
 			<td>@Html.DisplayFor(modelItem => item.description)</td>
 			<td>@Html.DisplayFor(modelItem => item.rating)</td>
-			<td>@Html.DisplayFor(modelItem => item.isPublished)</td>
+			<td>@getPublishedStatus(item.isPublished)</td>
 			<td>@Html.DisplayFor(modelItem => item.createdBy)</td>
 			<td>@Html.DisplayFor(modelItem => item.createdDate)</td>
 			<td>
@@ -35,3 +37,14 @@
 }
 	</tbody>
 </table>
+
+@functions {
+	public string getPublishedStatus(bool publishedBool)
+	{
+		if (publishedBool)
+		{
+			return "Yes";
+		}
+		return "No";
+	}
+}

@@ -26,13 +26,20 @@ public class CriticReviewsController : Controller
     // GET: CriticReviews
     public async Task<IActionResult> Index()
     {
-
-        var movies = await _context.CriticReview
-            //.Where(review => review.createdBy == _userId)
-            .Include(review => review.movie)
-            .ToListAsync();
-
-        return View(movies);
+        string localUserId = User.GetUserId();
+        // Check if the current logged in user is an admin if yes show all reviews, otherwise critics can only see their own reviews
+        if (localUserId == "auth0|6ae09b80a3b3b0e2c2280c87"){
+            var movies = await _context.CriticReview
+                .Include(review => review.movie)
+                .ToListAsync();
+            return View(movies);
+        } else {
+            var movies = await _context.CriticReview
+                .Where(review => review.createdBy == localUserId)
+                .Include(review => review.movie)
+                .ToListAsync();
+            return View(movies);
+        }
     }
 
     // GET: CriticReviews/Details/5
@@ -75,7 +82,7 @@ public class CriticReviewsController : Controller
         // Because createdBy is not supplied by the form.
         ModelState.Remove(nameof(CriticReview.createdBy));
 
-        //Checksif user selected a movie
+
         //if (!await _context.Movie.AnyAsync(movie => movie.id == criticReview.id))
         //{
         //    ModelState.AddModelError(nameof(CriticReview.movieId), "Please select a valid movie");
@@ -90,8 +97,6 @@ public class CriticReviewsController : Controller
         }
         return View(criticReview);
     }
-
-    //Creates a viewbag for each of the movies in the data base
 
     private async Task PopulateMovieList(int? selectedMovieId = null)
     {

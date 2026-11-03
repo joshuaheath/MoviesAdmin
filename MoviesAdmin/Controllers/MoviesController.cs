@@ -25,7 +25,9 @@ public class MoviesController : Controller
     public async Task<IActionResult> Index()    
     {
         string userId = User.GetUserId();
-        Console.WriteLine("Logged in as User" + userId);
+        //string userEmail = User.GetUsername();
+        Console.WriteLine("Logged in as User Id:" + userId);
+        //Console.WriteLine("Logged in as: " + userEmail);
 
         List<Movie> movies = await _context.Movie
             .Include(m => m.genre)
@@ -58,6 +60,7 @@ public class MoviesController : Controller
     }
 
     // GET: MOVIES/Create
+    [Authorize (Roles = "admin")]
     public IActionResult Create()
     {
         //Create a select list for the genres
@@ -76,6 +79,7 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "admin")]
     public async Task<IActionResult> Create([Bind("id,runtimeMin,title,synopsis,releaseDate,imageUrl,genreid,audienceRatingid")] Movie movie, IFormFile ImageUpload)
     {
         if (ImageUpload == null) {
@@ -106,6 +110,7 @@ public class MoviesController : Controller
     }
 
     // GET: MOVIES/Edit/5
+    [Authorize(Roles = "admin")]
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -135,6 +140,7 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "admin")]
     public async Task<IActionResult> Edit(int? id, [Bind("id,runtimeMin,title,synopsis,releaseDate,imageUrl,genreid,audienceRatingid")] Movie movie)
     {
         if (id != movie.id)
@@ -189,6 +195,7 @@ public class MoviesController : Controller
     }
 
     // GET: MOVIES/Delete/5
+    [Authorize(Roles = "admin")]
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -211,6 +218,7 @@ public class MoviesController : Controller
     // POST: MOVIES/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "admin")]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
         var movie = await _context.Movie.FindAsync(id);

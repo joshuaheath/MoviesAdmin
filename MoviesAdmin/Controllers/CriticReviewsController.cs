@@ -103,6 +103,8 @@ public class CriticReviewsController : Controller
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        await PopulateMovieList(criticReview.movieId);
         return View(criticReview);
     }
 

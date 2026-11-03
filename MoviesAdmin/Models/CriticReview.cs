@@ -16,6 +16,7 @@ namespace MoviesAdmin.Models
 
         //FK
         [Display(Name ="Movie")]
+        [Range(1, int.MaxValue, ErrorMessage = "Please select a movie.")]
         public int movieId { get; set; }
 
         // nav prop

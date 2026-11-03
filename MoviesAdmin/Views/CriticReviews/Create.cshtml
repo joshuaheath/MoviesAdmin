@@ -16,8 +16,8 @@
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-group mb-3">
 				<label asp-for="movieId" class="control-label">Movie</label>
-				<select asp-for="movieId" class="form-control" asp-items="ViewBag.movieId">
-					<option value="">-- Select a movie --</option>
+				<select asp-for="movieId" class="form-select" asp-items="ViewBag.movieId">
+					<option value="0">-- Select Movie Here --</option>
 				</select>
 				<span asp-validation-for="movieId" class="text-danger"></span>
 			</div>

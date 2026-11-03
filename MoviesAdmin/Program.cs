@@ -20,14 +20,6 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
     options.ClientSecret = builder.Configuration["Auth0:ClientSecret"];
 });
 
-builder.Services.Configure<OpenIdConnectOptions>(Auth0Constants.AuthenticationScheme, options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        NameClaimType = "name",
-        RoleClaimType = "https://localhost:7117/" // change to your app's domain
-    };
-});
 
 builder.Services.Configure<OpenIdConnectOptions>(Auth0Constants.AuthenticationScheme, options =>
 {

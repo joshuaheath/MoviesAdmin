@@ -10,36 +10,44 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 public class CriticReviewsController : Controller
 {
     private readonly MoviesContext _context;
-    private string? _userId;
+    private string _CurrentUserId => User.GetUserId();
+
+    private bool CanManageReview(CriticReview review) // Helper functions for admins and critics who own the reviews
+    {
+        return review.createdBy == _CurrentUserId || User.IsInRole("admin");
+    }
 
     public CriticReviewsController(MoviesContext context)
     {
         _context = context;
     }
 
-    public override void OnActionExecuted(ActionExecutedContext context)
-    {
-        base.OnActionExecuted(context);
-        _userId = User.GetUserId();
-    }
+    //public override void OnActionExecuted(ActionExecutedContext context)
+    //{
+    //    base.OnActionExecuted(context);
+    //    _userId = User.GetUserId();
+    //}
 
     // GET: CriticReviews
     public async Task<IActionResult> Index()
     {
         string localUserId = User.GetUserId();
-        // Check if the current logged in user is an admin if yes show all reviews, otherwise critics can only see their own reviews
-        if (localUserId == "auth0|6ae09b80a3b3b0e2c2280c87"){
+        var movies = await _context.CriticReview
+            .Include(review => review.movie)
+            .ToListAsync();
+        return View(movies);
+    }
+
+
+    // GET: CriticOwnReviews
+    public async Task<IActionResult> CriticOwnReviews()
+    {
             var movies = await _context.CriticReview
+                .Where(review => review.createdBy == _CurrentUserId)
                 .Include(review => review.movie)
                 .ToListAsync();
             return View(movies);
-        } else {
-            var movies = await _context.CriticReview
-                .Where(review => review.createdBy == localUserId)
-                .Include(review => review.movie)
-                .ToListAsync();
-            return View(movies);
-        }
+        
     }
 
     // GET: CriticReviews/Details/5
@@ -120,7 +128,7 @@ public class CriticReviewsController : Controller
         }
 
         var criticReview = await _context.CriticReview.FindAsync(id);
-        if (criticReview == null)
+        if (criticReview == null || !CanManageReview(criticReview)) // Does not let user get information to edit unless its the same Critic who made it
         {
             return NotFound();
         }
@@ -132,7 +140,8 @@ public class CriticReviewsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, [Bind("id,description,rating,isPublished,createdBy,createdDate")] CriticReview criticReview)
     {
-        if (id != criticReview.id)
+        var existingReview = await _context.CriticReview.FindAsync(id); //Finds the exsisting movie using ID insead of inputed values
+        if (id != criticReview.id || !CanManageReview(criticReview))
         {
             return NotFound();
         }
@@ -163,13 +172,14 @@ public class CriticReviewsController : Controller
     // GET: CriticReviews/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-        if (id == null)
-        {
-            return NotFound();
-        }
 
         var criticReview = await _context.CriticReview
             .FirstOrDefaultAsync(m => m.id == id);
+
+        if (id == null || !CanManageReview(criticReview))
+        {
+            return NotFound();
+        }
         if (criticReview == null)
         {
             return NotFound();
@@ -196,4 +206,6 @@ public class CriticReviewsController : Controller
     {
         return _context.CriticReview.Any(e => e.id == id);
     }
+
+
 }

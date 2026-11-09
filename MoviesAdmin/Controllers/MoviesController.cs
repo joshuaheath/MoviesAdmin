@@ -6,6 +6,7 @@ using MoviesAdmin.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using MoviesAdmin;
+using MoviesAdmin.ViewModels;
 
 [Authorize]
 public class MoviesController : Controller
@@ -46,17 +47,27 @@ public class MoviesController : Controller
         }
 
         var movie = await _context.Movie
-            .Include(m => m.genre) //populate the nav property
+            .Include(m => m.genre)
             .Include(m => m.audienceRating)
-            .FirstOrDefaultAsync(m => m.id == id); // get trail from db where Id = 5
+            .FirstOrDefaultAsync(m => m.id == id);
 
         if (movie == null)
         {
             return NotFound();
         }
 
+        var publishedReviewCount = await _context.CriticReview
+            .CountAsync(review =>
+                review.movieId == movie.id &&
+                review.isPublished);
 
-        return View(movie);
+        var viewModel = new MovieDetailsViewModel
+        {
+            Movie = movie,
+            PublishedReviewCount = publishedReviewCount
+        };
+
+        return View(viewModel);
     }
 
     // GET: MOVIES/Create

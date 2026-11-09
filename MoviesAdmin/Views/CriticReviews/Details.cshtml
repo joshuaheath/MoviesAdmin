@@ -22,7 +22,7 @@
 </div>
 <div>
 	@{
-		if(Model.createdBy == User.GetUserId() || User.IsInRole("admin"))
+		if(User.IsInRole("admin") || !Model.isPublished)
 		{		
 			<a asp-action="Edit" asp-route-id="@Model.id">Edit</a>
 			<text>|</text>

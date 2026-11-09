@@ -17,6 +17,11 @@ public class CriticReviewsController : Controller
         return review.createdBy == _CurrentUserId || User.IsInRole("admin");
     }
 
+    private bool isReviewPublished(CriticReview review)
+    {
+        return review.isPublished;
+    }
+
     public CriticReviewsController(MoviesContext context)
     {
         _context = context;
@@ -135,6 +140,12 @@ public class CriticReviewsController : Controller
         {
             return NotFound();
         }
+
+        if (isReviewPublished(criticReview))
+        {
+            return NotFound();
+        }
+
         return View(criticReview);
     }
 
@@ -148,11 +159,17 @@ public class CriticReviewsController : Controller
             return NotFound();
         }
 
+        if (isReviewPublished(submittedReview))
+        {
+            return BadRequest();
+        }
+
         var existingReview = await _context.CriticReview.FindAsync(id);
         if (existingReview == null || !CanManageReview(existingReview)) 
         {
             return NotFound();
         }
+        
         if (ModelState.IsValid)
         {
             return View(submittedReview);
@@ -183,6 +200,10 @@ public class CriticReviewsController : Controller
         {
             return NotFound();
         }
+        //if (!CanManageReview(criticReview)  isReviewPublished(criticReview))
+        //{
+        //    return NotFound();
+        //}
 
         return View(criticReview);
     }
@@ -197,6 +218,10 @@ public class CriticReviewsController : Controller
         {
             _context.CriticReview.Remove(criticReview);
         }
+        //if (!CanManageReview(criticReview) || isReviewPublished(criticReview))
+        //{
+        //    return NotFound();
+        //}
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }

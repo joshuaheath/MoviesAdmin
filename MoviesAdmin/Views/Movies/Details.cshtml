@@ -1,24 +1,25 @@
-@model MoviesAdmin.Models.Movie
+@model MoviesAdmin.ViewModels.MovieDetailsViewModel
 @using Microsoft.AspNetCore.Html
 
 @{
     ViewData["Title"] = "Details";
+    var movie = Model.Movie;
 }
 
-<h1>Details - @Html.DisplayNameFor(model => model.title)</h1>
+<h1>Details - @Html.DisplayNameFor(model => model.Movie.title)</h1>
 
 <div class="mb-3">
-    <img src="@Model.imageUrl" alt="@Model.title" class="detailsView" />
+    <img src="@movie.imageUrl" alt="@movie.title" class="detailsView" />
 </div>
 <div>
     <dl>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.synopsis)
+            @Html.DisplayNameFor(model => model.Movie.synopsis)
         </dt>
         <dd class = "col-sm-10">
                 @{
                     var descWithBreaks = new HtmlString(
-                        Model.synopsis.Replace("\r\n", "<br />")
+                        Model.Movie.synopsis.Replace("\r\n", "<br />")
                             .Replace("\n", "<br />")
                             .Replace("\r", "<br />"));
                 }
@@ -26,36 +27,43 @@
                 @descWithBreaks
         </dd>
 
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.runtimeMin)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Movie.runtimeMin)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.runtimeMin)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Movie.runtimeMin)
         </dd>
 
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.genre)
+            @Html.DisplayNameFor(model => model.Movie.genre)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.genre.title)
+            @Html.DisplayFor(model => model.Movie.genre.title)
         </dd>
 
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.audienceRating)
+            @Html.DisplayNameFor(model => model.Movie.audienceRating)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.audienceRating.title)
+            @Html.DisplayFor(model => model.Movie.audienceRating.title)
         </dd>
 
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.releaseDate)
+            @Html.DisplayNameFor(model => model.Movie.releaseDate)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.releaseDate)
+            @Html.DisplayFor(model => model.Movie.releaseDate)
+        </dd>
+
+        <dt class="col-sm-2">
+            Published Reviews
+        </dt>
+        <dd class="col-sm-10">
+            @Model.PublishedReviewCount
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@movie.id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

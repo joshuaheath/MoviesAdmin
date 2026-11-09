@@ -28,9 +28,16 @@
 				<td>@getPublishedStatus(item.isPublished)</td>
 				<td>@Html.DisplayFor(modelItem => item.createdDate)</td>
 				<td>
-					<a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-					<a asp-action="Details" asp-route-id="@item.id">Details</a> |
+				@{
+					if(!item.isPublished)
+					{		
+					<a asp-action="Edit" asp-route-id="@item.id">Edit</a>
+						<text>|</text>
 					<a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+						<text>|</text>
+					}
+				}
+					<a asp-action="Details" asp-route-id="@item.id">Details</a>
 				</td>
 			</tr>
 		}

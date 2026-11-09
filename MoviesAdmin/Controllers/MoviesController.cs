@@ -141,12 +141,20 @@ public class MoviesController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "admin")]
-    public async Task<IActionResult> Edit(int? id, [Bind("id,runtimeMin,title,synopsis,releaseDate,imageUrl,genreid,audienceRatingid")] Movie movie)
+    public async Task<IActionResult> Edit(int? id, [Bind("id,runtimeMin,title,synopsis,releaseDate,genreid,audienceRatingid")] Movie movie, IFormFile? ImageUpload)
     {
         if (id != movie.id)
         {
             return NotFound();
         }
+
+        var existingMovie = await _context.Movie.FindAsync(movie.id);
+        if (existingMovie == null)
+        {
+            return NotFound();
+        }
+
+        var oldImageUrl = existingMovie.imageUrl;
         var exists = _context.AudienceRating.Any(a => a.id == movie.audienceRatingid);
         if (!exists)
         {
@@ -154,20 +162,36 @@ public class MoviesController : Controller
             // repopulate ViewBag and return View(movie);
         }
 
-        // Handle new image file being uploaded
-        //if (ImageUpload != null)
-        //{
-        //    // TO-DO: save the new image and link to this trail record. Also nice to delete old file.
-        //}
-
         if (ModelState.IsValid)
         {
+            var hasNewImage = ImageUpload is not null && ImageUpload.Length > 0;
 
+            //Checks if a new image was uplaoded
+            if (hasNewImage)
+            {
+                //Create new image extension
+                var extension = Path.GetExtension(ImageUpload.FileName);
+                var newFileName = $"{Guid.NewGuid()}{extension}";
+                movie.imageUrl = await _azureStorage.UploadFileAsync(ImageUpload, newFileName);
+            }
+            else
+            {
+                //Otherwise keep it the same
+                movie.imageUrl = oldImageUrl;
+            }
 
             try
             {
-                _context.Update(movie);
+                _context.Entry(existingMovie).CurrentValues.SetValues(movie);
                 await _context.SaveChangesAsync();
+
+                //Remove the old image from storage
+                if (hasNewImage &&
+                    !string.IsNullOrWhiteSpace(oldImageUrl) &&
+                    !string.Equals(oldImageUrl, movie.imageUrl, StringComparison.OrdinalIgnoreCase))
+                {
+                    await _azureStorage.DeleteFileAsync(oldImageUrl);
+                }
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -182,6 +206,8 @@ public class MoviesController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
+
+        movie.imageUrl = oldImageUrl;
 
         //Create a select list for the genres
         var genres = _context.Genre.ToList();

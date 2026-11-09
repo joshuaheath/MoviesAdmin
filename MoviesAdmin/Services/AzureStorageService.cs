@@ -46,5 +46,26 @@ namespace MoviesAdmin.Services
 
             return blobClient.Uri.ToString();
         }
+
+        public async Task DeleteFileAsync(string fileUrl)
+        {
+            if (!Uri.TryCreate(fileUrl, UriKind.Absolute, out var fileUri))
+            {
+                return;
+            }
+
+            var path = fileUri.AbsolutePath.Trim('/');
+            var containerPrefix = $"{containerName}/";
+            if (!path.StartsWith(containerPrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            var blobName = Uri.UnescapeDataString(path[containerPrefix.Length..]);
+            var blobClient = _blobServiceClient
+                .GetBlobContainerClient(containerName)
+                .GetBlobClient(blobName);
+            await blobClient.DeleteIfExistsAsync();
+        }
     }
 }

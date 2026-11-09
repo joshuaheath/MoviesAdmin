@@ -12,9 +12,11 @@
 		<form asp-action="Edit">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<input type="hidden" asp-for="id" />
+			<input type="hidden" asp-for="createdBy" />
+
 			<div class="form-group">
 				<label asp-for="description" class="control-label"></label>
-				<input asp-for="description" class="form-control" />
+				<textarea asp-for="description" class="form-control" rows="5"></textarea>
 				<span asp-validation-for="description" class="text-danger"></span>
 			</div>
 			<div class="form-group">
@@ -24,13 +26,8 @@
 			</div>
 			<div class="form-group">
 				<label asp-for="isPublished" class="control-label"></label>
-				<input asp-for="isPublished" class="form-control" />
+				<input type="checkbox" asp-for="isPublished" class="form-control" />
 				<span asp-validation-for="isPublished" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="createdBy" class="control-label"></label>
-				<input asp-for="createdBy" class="form-control" />
-				<span asp-validation-for="createdBy" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<label asp-for="createdDate" class="control-label"></label>

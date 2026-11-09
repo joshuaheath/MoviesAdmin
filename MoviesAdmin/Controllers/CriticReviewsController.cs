@@ -33,6 +33,7 @@ public class CriticReviewsController : Controller
     {
         string localUserId = User.GetUserId();
         var movies = await _context.CriticReview
+            .Where(review => review.isPublished == true)
             .Include(review => review.movie)
             .ToListAsync();
         return View(movies);
@@ -140,36 +141,31 @@ public class CriticReviewsController : Controller
     // POST: CriticReviews/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("id,description,rating,isPublished,createdBy,createdDate")] CriticReview criticReview)
+    public async Task<IActionResult> Edit(int id, [Bind("id,description,rating,isPublished")] CriticReview submittedReview)
     {
-        var existingReview = await _context.CriticReview.FindAsync(id); //Finds the exsisting movie using ID insead of inputed values
-        if (id != criticReview.id || !CanManageReview(criticReview))
+        if (id != submittedReview.id)
         {
             return NotFound();
         }
 
+        var existingReview = await _context.CriticReview.FindAsync(id);
+        if (existingReview == null || !CanManageReview(existingReview)) 
+        {
+            return NotFound();
+        }
         if (ModelState.IsValid)
         {
-            try
-            {
-                _context.Update(criticReview);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CriticReviewExists(criticReview.id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            return View(submittedReview);
+        }
+
+            existingReview.description = submittedReview.description;
+            existingReview.rating = submittedReview.rating;
+            existingReview.isPublished = submittedReview.isPublished;
+
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
-        return View(criticReview);
-    }
 
     // GET: CriticReviews/Delete/5
     public async Task<IActionResult> Delete(int? id)
@@ -177,6 +173,7 @@ public class CriticReviewsController : Controller
 
         var criticReview = await _context.CriticReview
             .FirstOrDefaultAsync(m => m.id == id);
+
 
         if (id == null || !CanManageReview(criticReview))
         {
